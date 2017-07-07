@@ -74,7 +74,7 @@
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
-                        android:text="Title"/>
+                        android:text="android:text"/>
                     <ImageView
                         android:id="@+id/imageViewDateDetail"
                         android:layout_toRightOf="@id/imageViewInfoDetail"
@@ -95,7 +95,7 @@
                         android:layout_height="@dimen/_20sdp"
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_10sdp"
-                        android:text="Release date"/>
+                        android:text="android:text"/>
                     <ImageView
                         android:id="@+id/imageViewVoteDetail"
                         android:layout_toRightOf="@id/imageViewInfoDetail"
@@ -116,7 +116,7 @@
                         android:layout_height="@dimen/_20sdp"
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_10sdp"
-                        android:text="Release date"/>
+                        android:text="android:text"/>
 
                     <TextView
                         android:id="@+id/textViewPlotDetail"

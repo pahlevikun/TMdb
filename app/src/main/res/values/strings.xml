@@ -2,4 +2,6 @@
     <string name="app_name">The Movie Stage 1</string>
 
     <string name="app_layout_search">Search Movie</string>
+
+    <string name="API_KEY">07e242ecbf9f2089b827ae959e717596</string>
 </resources>

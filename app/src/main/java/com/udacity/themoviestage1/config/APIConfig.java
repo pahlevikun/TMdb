@@ -11,8 +11,6 @@ public class APIConfig {
     public static String DETAIL = "https://api.themoviedb.org/3/movie/";
     public static String SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=";
 
-    public static String TOKEN ="07e242ecbf9f2089b827ae959e717596";
-
     public static String BASE_IMAGE = "https://image.tmdb.org/t/p/w500/";
     public static String BASE_BACKDROP = "https://image.tmdb.org/t/p/w780/";
 }

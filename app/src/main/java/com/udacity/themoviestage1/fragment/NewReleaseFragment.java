@@ -5,10 +5,12 @@ package com.udacity.themoviestage1.fragment;
  */
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,12 +60,12 @@ public class NewReleaseFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
-        String url = APIConfig.MAIN_NEW+APIConfig.TOKEN;
+        String url = APIConfig.MAIN_NEW+R.string.API_KEY;
         getNew(url);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(getActivity(),2);
+        layoutManager = new GridLayoutManager(getActivity(),calculateNoOfColumns(getActivity()));
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MovieAdapter(getActivity(),valueList);
@@ -135,6 +137,14 @@ public class NewReleaseFragment extends Fragment{
     private void hideDialog() {
         if (loading.isShowing())
             loading.dismiss();
+    }
+
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int scalingFactor = 180;
+        int noOfColumns = (int) (dpWidth / scalingFactor);
+        return noOfColumns;
     }
 
 }
