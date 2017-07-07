@@ -76,7 +76,7 @@ public class DetailActivity extends AppCompatActivity {
         original_title = intent.getStringExtra("original_title");
         release_date = intent.getStringExtra("release_date");
 
-        String url = APIConfig.DETAIL + idMovie + "?api_key=" + APIConfig.TOKEN;
+        String url = APIConfig.DETAIL + idMovie + "?api_key=" + R.string.API_KEY;
         getDetail(url);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
