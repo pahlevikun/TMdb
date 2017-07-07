@@ -47,6 +47,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private ProgressDialog loading;
 
+    private Movie movie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +72,16 @@ public class DetailActivity extends AppCompatActivity {
         }
         appBarLayout.bringToFront();
 
+
         Intent intent = getIntent();
         idMovie = intent.getStringExtra("idMovie");
         title = intent.getStringExtra("title");
         original_title = intent.getStringExtra("original_title");
         release_date = intent.getStringExtra("release_date");
 
+        movie = intent.getParcelableExtra("parcel");
+        Log.d("Hasil"," "+movie.getIdMovie());
+        Log.d("Hasil"," "+movie.idMovie);
         String url = APIConfig.DETAIL + idMovie + "?api_key=" + R.string.API_KEY;
         getDetail(url);
 

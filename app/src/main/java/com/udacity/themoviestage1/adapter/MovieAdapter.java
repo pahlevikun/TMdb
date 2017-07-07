@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private ArrayList<Movie> movieData;
     private Context context;
+    private Movie movie;
 
     public MovieAdapter(Context context,ArrayList<Movie> movieData) {
         this.movieData = movieData;
@@ -43,15 +44,27 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         viewHolder.textView1.setText(movieData.get(i).getTitle());
         viewHolder.textView2.setText(movieData.get(i).getRealease_date());
-        Picasso.with(context).load(APIConfig.BASE_IMAGE+movieData.get(i).getPoster_path()).into(viewHolder.imageView);
+        Picasso.with(context)
+                .load(APIConfig.BASE_IMAGE+movieData.get(i).getPoster_path())
+                .error(R.drawable.ic_image)
+                .into(viewHolder.imageView);
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                movie = new Movie(movieData.get(i).getId(),
+                                    movieData.get(i).getIdMovie(),
+                                    movieData.get(i).getTitle(),
+                                    movieData.get(i).getPopularity(),
+                                    movieData.get(i).getPoster_path(),
+                                    movieData.get(i).getOriginal_language(),
+                                    movieData.get(i).getOriginal_title(),
+                                    movieData.get(i).getRealease_date());
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("idMovie",movieData.get(i).getIdMovie());
                 intent.putExtra("title",movieData.get(i).getTitle());
                 intent.putExtra("original_title",movieData.get(i).getOriginal_title());
                 intent.putExtra("release_date",movieData.get(i).getRealease_date());
+                intent.putExtra("parcel",movie);
                 context.startActivity(intent);
             }
         });

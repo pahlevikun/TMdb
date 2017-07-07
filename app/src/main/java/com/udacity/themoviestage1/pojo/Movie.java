@@ -1,12 +1,15 @@
 package com.udacity.themoviestage1.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by farhan on 6/30/17.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
 
-    private String id, idMovie, title, popularity, poster_path, original_language, original_title, realease_date;
+    public String id, idMovie, title, popularity, poster_path, original_language, original_title, realease_date;
 
     public Movie(){
 
@@ -14,7 +17,6 @@ public class Movie {
 
     public Movie(String id, String idMovie, String title, String popularity, String poster_path, String original_language,
                     String original_title, String realease_date){
-
         this.id = id;
         this.idMovie = idMovie;
         this.title = title;
@@ -24,6 +26,46 @@ public class Movie {
         this.original_title = original_title;
         this.realease_date = realease_date;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.idMovie);
+        dest.writeString(this.title);
+        dest.writeString(this.popularity);
+        dest.writeString(this.poster_path);
+        dest.writeString(this.original_language);
+        dest.writeString(this.original_title);
+        dest.writeString(this.realease_date);
+    }
+
+    protected Movie(Parcel in) {
+        this.id = in.readString();
+        this.idMovie = in.readString();
+        this.title = in.readString();
+        this.popularity = in.readString();
+        this.poster_path = in.readString();
+        this.original_language = in.readString();
+        this.original_title = in.readString();
+        this.realease_date = in.readString();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getId() {
         return id;

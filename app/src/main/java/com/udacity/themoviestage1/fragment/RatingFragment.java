@@ -60,7 +60,7 @@ public class RatingFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
-        String url = APIConfig.MAIN_RATING +R.string.API_KEY;
+        String url = APIConfig.MAIN_RATING +getString(R.string.API_KEY);
         getRating(url);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
