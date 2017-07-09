@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private String idMovie, title, original_title, release_date, shareBody;
+    private String title, shareBody;
 
     private FloatingActionButton floatingActionButton;
     private TextView tvTitle, tvVote, tvDate, tvPlot;
@@ -74,15 +74,16 @@ public class DetailActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        idMovie = intent.getStringExtra("idMovie");
-        title = intent.getStringExtra("title");
-        original_title = intent.getStringExtra("original_title");
-        release_date = intent.getStringExtra("release_date");
+        if(intent != null){
+            if(intent.hasExtra("parcel")){
+                movie = intent.getParcelableExtra("parcel");
+                Log.d("Hasil"," "+movie.idMovie);
+            }else{
+                finish();
+            }
+        }
 
-        movie = intent.getParcelableExtra("parcel");
-        Log.d("Hasil"," "+movie.getIdMovie());
-        Log.d("Hasil"," "+movie.idMovie);
-        String url = APIConfig.DETAIL + idMovie + "?api_key=" + R.string.API_KEY;
+        String url = APIConfig.DETAIL + movie.idMovie + "?api_key=" + getString(R.string.API_KEY);
         getDetail(url);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
