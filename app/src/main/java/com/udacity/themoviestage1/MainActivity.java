@@ -99,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this,SearchActivity.class);
             startActivity(intent);
             return true;
+        }else if(id==R.id.action_fav) {
+            Intent intent = new Intent(this,FavActivity.class);
+            startActivity(intent);
+            return true;
         }else if(id==R.id.action_info) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Information");

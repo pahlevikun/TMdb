@@ -128,6 +128,18 @@
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_10sdp"
                         android:text="Plot"/>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/buttonVideo"
+                        android:layout_below="@id/textViewPlotDetail"
+                        android:text="Video"
+                        android:background="@color/colorAccent"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </android.support.design.widget.CoordinatorLayout>

@@ -71,7 +71,6 @@ public class NewReleaseFragment extends Fragment{
         adapter = new MovieAdapter(getActivity(),valueList);
         recyclerView.setAdapter(adapter);
 
-
         return view;
     }
 
