@@ -28,9 +28,11 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.udacity.themoviestage1.adapter.ReviewAdapter;
+import com.udacity.themoviestage1.adapter.TrailerAdapter;
 import com.udacity.themoviestage1.config.APIConfig;
 import com.udacity.themoviestage1.contentprovider.Provider;
 import com.udacity.themoviestage1.pojo.Review;
+import com.udacity.themoviestage1.pojo.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,10 +49,11 @@ public class VideoActivity extends YouTubeBaseActivity implements
     private String idMovie,id;
 
     private ProgressDialog loading;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, recyclerView2;
     private ArrayList<Review> valueList = new ArrayList<>();
+    private ArrayList<Trailer> trailerList = new ArrayList<>();
     private ReviewAdapter adapter;
-
+    private TrailerAdapter trailerAdapter;
 
     private YouTubePlayerView youTubeView;
 
@@ -74,6 +77,13 @@ public class VideoActivity extends YouTubeBaseActivity implements
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ReviewAdapter(VideoActivity.this,valueList);
         recyclerView.setAdapter(adapter);
+
+        recyclerView2 = (RecyclerView) findViewById(R.id.recyclerView2);
+        RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(VideoActivity.this);
+        recyclerView2.setLayoutManager(mLayoutManager2);
+        recyclerView2.setItemAnimator(new DefaultItemAnimator());
+        trailerAdapter = new TrailerAdapter(VideoActivity.this,trailerList);
+        recyclerView2.setAdapter(trailerAdapter);
     }
 
     private void getNew(String url) {
@@ -85,7 +95,6 @@ public class VideoActivity extends YouTubeBaseActivity implements
 
             @Override
             public void onResponse(String response) {
-                hideDialog();
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -100,11 +109,69 @@ public class VideoActivity extends YouTubeBaseActivity implements
                         valueList.add(new Review(String.valueOf(i),author,contens,urls));
                     }
                     youTubeView.initialize(getString(R.string.YOUTUBE_KEY), VideoActivity.this);
-                    Log.d("HASIL"," "+valueList.size());
+
+                    String url = APIConfig.DETAIL + id + "?append_to_response=videos&api_key=" + getString(R.string.API_KEY);
+                    getTrailer(url);
+                } catch (JSONException e) {
+                    hideDialog();
+                    Toast.makeText(VideoActivity.this, "JSON Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VideoActivity.this, "Can't connect to Server", Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                return headers;
+            }
+        };
+
+        int socketTimeout = 20000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
+
+    private void getTrailer(String url) {
+
+        RequestQueue queue = Volley.newRequestQueue(VideoActivity.this);
+
+        StringRequest postRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    Log.d("RESPON",""+response);
+                    JSONObject video = jObj.getJSONObject("videos");
+
+                    JSONArray results = video.getJSONArray("results");
+                    for (int i = 0; i < results.length(); i++){
+                        JSONObject data = results.getJSONObject(i);
+                        String key = data.getString("key");
+                        String name = data.getString("name");
+                        trailerList.add(new Trailer(String.valueOf(i),key,name));
+                    }
+                    Log.d("RESPON"," "+trailerList.size());
                 } catch (JSONException e) {
                     Toast.makeText(VideoActivity.this, "JSON Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
                 adapter.notifyDataSetChanged();
+                trailerAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {

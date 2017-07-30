@@ -12,15 +12,17 @@ public class Content implements Parcelable {
     public String id;
     public String key;
     public String movie;
+    public String poster;
 
     public Content(){
 
     }
 
-    public Content(String id, String key, String movie){
+    public Content(String id, String key, String movie, String poster){
         this.id = id;
         this.key = key;
         this.movie = movie;
+        this.poster = poster;
     }
 
     @Override
@@ -33,12 +35,14 @@ public class Content implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.key);
         dest.writeString(this.movie);
+        dest.writeString(this.poster);
     }
 
     protected Content(Parcel in) {
         this.id = in.readString();
         this.key = in.readString();
         this.movie = in.readString();
+        this.poster = in.readString();
     }
 
     public static final Creator<Content> CREATOR = new Creator<Content>() {
@@ -75,6 +79,14 @@ public class Content implements Parcelable {
 
     public void setMovie(String movie) {
         this.movie = movie;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
     public static Creator<Content> getCREATOR() {

@@ -43,7 +43,11 @@
             android:name=".contentprovider.Provider"
             android:authorities="com.udacity.themoviestage1.contentprovider.Provider" />
 
-        <activity android:name=".FavActivity"></activity>
+        <activity
+            android:name=".FavActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity  {
 
-    private String title, shareBody;
+    private String title, shareBody,url,backdrop_path;
 
     private FloatingActionButton floatingActionButton;
     private TextView tvTitle, tvVote, tvDate, tvPlot;
@@ -82,12 +82,15 @@ public class DetailActivity extends AppCompatActivity  {
                 movie = intent.getParcelableExtra("parcel");
                 Log.d("Hasil"," "+movie.idMovie);
                 title = movie.title;
+                url = APIConfig.DETAIL + movie.idMovie + "?api_key=" + getString(R.string.API_KEY);
+            }else if (intent.hasExtra("kunci")){
+                title = intent.getStringExtra("judul");
+                url = APIConfig.DETAIL + intent.getStringExtra("kunci") + "?api_key=" + getString(R.string.API_KEY);
             }else{
                 finish();
             }
         }
 
-        String url = APIConfig.DETAIL + movie.idMovie + "?api_key=" + getString(R.string.API_KEY);
         getDetail(url);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +131,7 @@ public class DetailActivity extends AppCompatActivity  {
                     String voting = jObj.getString("vote_average");
                     String overview = jObj.getString("overview");
                     String poster_path = jObj.getString("poster_path");
-                    String backdrop_path = jObj.getString("backdrop_path");
+                    backdrop_path = jObj.getString("backdrop_path");
 
                     if(backdrop_path.isEmpty()||backdrop_path.equals(null)||backdrop_path==null||backdrop_path.equals("null")){
                         ivBackground.setBackgroundResource(R.color.colorPrimary);
@@ -254,6 +257,7 @@ public class DetailActivity extends AppCompatActivity  {
             ContentValues values = new ContentValues();
             values.put(Provider.TITLE, title);
             values.put(Provider.MOVIE, id);
+            values.put(Provider.IMAGE, backdrop_path);
             Uri uri = getContentResolver().insert(Provider.CONTENT_URI, values);
 
             Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();

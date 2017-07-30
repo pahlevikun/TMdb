@@ -1,64 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.udacity.themoviestage1.SearchActivity">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:layout_alignParentTop="true">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/editTextSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_search2"
+                android:drawablePadding="@dimen/_5sdp"
                 android:hint="Search Movie..."
-                android:maxLines="1"
                 android:inputType="text"
+                android:maxLines="1"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorGrey"
-                android:drawableLeft="@drawable/ic_search2"
-                android:drawablePadding="@dimen/_5sdp">
+                android:textSize="@dimen/_13sdp">
+
                 <requestFocus />
             </EditText>
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/buttonSearch"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:text="Search"
-                android:textSize="@dimen/_10sdp"
-                android:fontFamily="sans-serif-condensed"
-                android:textStyle="bold"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="true"
                 android:background="@color/colorAccent"
-                style="@style/Widget.AppCompat.Button.Borderless" />
+                android:fontFamily="sans-serif-condensed"
+                android:text="Search"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold" />
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

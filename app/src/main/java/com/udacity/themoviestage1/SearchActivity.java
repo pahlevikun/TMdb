@@ -76,7 +76,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String param = etSearch.getText().toString().trim();
                 param = param.replace(" ","+");
-                String url = APIConfig.SEARCH + R.string.API_KEY + "&query=" +param;
+                String url = APIConfig.SEARCH + getString(R.string.API_KEY) + "&query=" +param;
                 Log.d("HASIL"," "+url);
 
                 InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.udacity.themoviestage1.DetailActivity">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayoutDetail"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@color/colorTransparent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:background="@color/colorTransparent"
+        android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,17 +24,21 @@
             app:layout_scrollFlags="enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
+
     <ImageView
         android:id="@+id/imageViewBackDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/floatingActionButtonDetail"
                 android:layout_width="wrap_content"
@@ -42,104 +47,112 @@
                 android:src="@drawable/ic_share"
                 card_view:layout_anchor="@+id/cardViewDetail"
                 card_view:layout_anchorGravity="top|right" />
+
             <android.support.v7.widget.CardView
                 android:id="@+id/cardViewDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_150sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_150sdp"
+                card_view:cardBackgroundColor="@android:color/white"
                 card_view:cardCornerRadius="@dimen/_2sdp"
                 card_view:cardElevation="@dimen/_2sdp"
-                card_view:cardBackgroundColor="@android:color/white"
                 card_view:cardUseCompatPadding="true">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/_10sdp">
+
                     <ImageView
                         android:id="@+id/imageViewInfoDetail"
                         android:layout_width="@dimen/_120sdp"
                         android:layout_height="@dimen/_160sdp"
-                        android:src="@mipmap/ic_launcher"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher" />
+
                     <TextView
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/textViewTitleDetail"
-                        android:layout_toRightOf="@+id/imageViewInfoDetail"
-                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_toRightOf="@+id/imageViewInfoDetail"
+                        android:text="android:text"
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold"
-                        android:text="android:text"/>
+                        android:textStyle="bold" />
+
                     <ImageView
                         android:id="@+id/imageViewDateDetail"
-                        android:layout_toRightOf="@id/imageViewInfoDetail"
-                        android:layout_below="@+id/textViewTitleDetail"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_date"/>
+                        android:layout_below="@+id/textViewTitleDetail"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_toRightOf="@id/imageViewInfoDetail"
+                        android:src="@drawable/ic_date" />
+
                     <TextView
                         android:id="@+id/textViewDateDetail"
-                        android:layout_toRightOf="@id/imageViewDateDetail"
-                        android:layout_below="@+id/textViewTitleDetail"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_20sdp"
+                        android:layout_below="@+id/textViewTitleDetail"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_toRightOf="@id/imageViewDateDetail"
+                        android:gravity="center_vertical"
+                        android:text="android:text"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="android:text"/>
+                        android:textSize="@dimen/_10sdp" />
+
                     <ImageView
                         android:id="@+id/imageViewVoteDetail"
-                        android:layout_toRightOf="@id/imageViewInfoDetail"
-                        android:layout_below="@+id/imageViewDateDetail"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_vote"/>
+                        android:layout_below="@+id/imageViewDateDetail"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_toRightOf="@id/imageViewInfoDetail"
+                        android:src="@drawable/ic_vote" />
+
                     <TextView
                         android:id="@+id/textViewVoteDetail"
-                        android:layout_toRightOf="@id/imageViewDateDetail"
-                        android:layout_below="@+id/textViewDateDetail"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_20sdp"
+                        android:layout_below="@+id/textViewDateDetail"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_toRightOf="@id/imageViewDateDetail"
+                        android:gravity="center_vertical"
+                        android:text="android:text"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="android:text"/>
+                        android:textSize="@dimen/_10sdp" />
 
                     <TextView
                         android:id="@+id/textViewPlotDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/imageViewInfoDetail"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:text="Plot"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="Plot"/>
+                        android:textSize="@dimen/_10sdp" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/buttonVideo"
-                        android:layout_below="@id/textViewPlotDetail"
-                        android:text="Video"
-                        android:background="@color/colorAccent"
-                        android:textColor="@color/colorWhite"
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewPlotDetail"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_10sdp" />
+                        android:background="@color/colorAccent"
+                        android:text="Video"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </android.support.design.widget.CoordinatorLayout>

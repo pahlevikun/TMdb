@@ -27,6 +27,7 @@ public class Provider extends ContentProvider {
     public static final String _ID = "_id";
     public static final String TITLE = "key";
     public static final String MOVIE = "movie";
+    public static final String IMAGE = "image";
 
     private static HashMap<String, String> MOVIE_MAP;
 
@@ -43,12 +44,13 @@ public class Provider extends ContentProvider {
     private SQLiteDatabase db;
     static final String DATABASE_NAME = "The Movie";
     static final String MOVIE_TABLE_NAME = "movie";
-    static final int DATABASE_VERSION = 2;
+    static final int DATABASE_VERSION = 3;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + MOVIE_TABLE_NAME +
                     " ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " "+TITLE+" TEXT NOT NULL, " +
-                    " "+MOVIE+" TEXT NOT NULL);";
+                    " "+MOVIE+" TEXT NOT NULL, " +
+                    " "+IMAGE+" TEXT NOT NULL);";
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
         DatabaseHelper(Context context){
@@ -62,8 +64,8 @@ public class Provider extends ContentProvider {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + MOVIE_TABLE_NAME);
-            onCreate(db);
+            //db.execSQL("DROP TABLE IF EXISTS " + MOVIE_TABLE_NAME);
+            //onCreate(db);
         }
     }
 

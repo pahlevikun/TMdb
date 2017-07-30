@@ -7,6 +7,8 @@ package com.udacity.themoviestage1.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,8 @@ public class RatingFragment extends Fragment{
     private MovieAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private int scrollPosition;
+
     public RatingFragment() {
     }
 
@@ -73,6 +77,16 @@ public class RatingFragment extends Fragment{
 
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void getRating(String url) {
