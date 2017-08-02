@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -50,7 +51,13 @@ public class RatingFragment extends Fragment{
     private MovieAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private static Bundle mBundleRecyclerViewState;
+
     private int scrollPosition;
+
+    private static final String LIST_STATE = "listState";
+    private Parcelable mListState = null;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
 
     public RatingFragment() {
     }
@@ -75,18 +82,50 @@ public class RatingFragment extends Fragment{
         adapter = new MovieAdapter(getActivity(),valueList);
         recyclerView.setAdapter(adapter);
 
-
         return view;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    /*@Override
+    public void onPause() {
+        super.onPause();
+
+        // save RecyclerView state
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onResume() {
+        super.onResume();
+
+        // restore RecyclerView state
+        if (mBundleRecyclerViewState != null) {
+            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
+    }*/
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        //super.onSaveInstanceState(savedInstanceState);
+
+        //Parcelable listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        //savedInstanceState.putParcelable(KEY_RECYCLER_STATE, listState);
+
+        //savedInstanceState.putInt(KEY_RECYCLER_STATE, recyclerView.getScrollY()); // get current recycle view position here.
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // restore RecyclerView state
+        /*if (savedInstanceState != null) {
+            Parcelable listState = savedInstanceState.getParcelable(KEY_RECYCLER_STATE);
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }*/
     }
 
     private void getRating(String url) {

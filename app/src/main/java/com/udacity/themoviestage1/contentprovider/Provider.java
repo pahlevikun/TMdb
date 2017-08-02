@@ -44,12 +44,12 @@ public class Provider extends ContentProvider {
     private SQLiteDatabase db;
     static final String DATABASE_NAME = "The Movie";
     static final String MOVIE_TABLE_NAME = "movie";
-    static final int DATABASE_VERSION = 3;
+    static final int DATABASE_VERSION = 4;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + MOVIE_TABLE_NAME +
                     " ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " "+TITLE+" TEXT NOT NULL, " +
-                    " "+MOVIE+" TEXT NOT NULL, " +
+                    " "+MOVIE+" TEXT UNIQUE ON CONFLICT REPLACE, " +
                     " "+IMAGE+" TEXT NOT NULL);";
 
     private static class DatabaseHelper extends SQLiteOpenHelper {

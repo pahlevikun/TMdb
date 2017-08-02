@@ -50,10 +50,10 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
                 /*context.getContentResolver().delete(Provider.CONTENT_URI,Provider._ID + "=" + movieData.get(i).getId(), null);
                 ((Activity)context).finish();
                 Toast.makeText(context, "Success delete favorite!", Toast.LENGTH_SHORT).show();*/
-                Intent  intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("kunci",movieData.get(i).getId());
-                intent.putExtra("judul",movieData.get(i).getMovie());
-                context.startActivity(intent);
+                //Intent  intent = new Intent(context, DetailActivity.class);
+                //intent.putExtra("kunci",movieData.get(i).getId());
+                //intent.putExtra("judul",movieData.get(i).getMovie());
+                //context.startActivity(intent);
             }
         });
         Picasso.with(context)
