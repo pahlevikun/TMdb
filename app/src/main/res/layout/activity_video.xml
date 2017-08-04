@@ -62,10 +62,10 @@
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.udacity.themoviestage1.customlib.NoScrollRecycler
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_height="@dimen/_100sdp"
                         android:layout_marginTop="@dimen/_5sdp" />
 
                     <TextView
@@ -76,10 +76,10 @@
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.udacity.themoviestage1.customlib.NoScrollRecycler
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_height="@dimen/_100sdp"
                         android:layout_marginTop="@dimen/_5sdp" />
 
 
