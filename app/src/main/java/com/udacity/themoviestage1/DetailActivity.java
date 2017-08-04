@@ -31,6 +31,7 @@ import com.udacity.themoviestage1.config.APIConfig;
 import com.udacity.themoviestage1.contentprovider.Provider;
 import com.udacity.themoviestage1.pojo.Movie;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -254,13 +255,18 @@ public class DetailActivity extends AppCompatActivity  {
             finish();
             return true;
         }else if(id==R.id.action_fav) {
-            ContentValues values = new ContentValues();
-            values.put(Provider.TITLE, title);
-            values.put(Provider.MOVIE, id);
-            values.put(Provider.IMAGE, backdrop_path);
-            Uri uri = getContentResolver().insert(Provider.CONTENT_URI, values);
+            try{
+                ContentValues values = new ContentValues();
+                values.put(Provider.TITLE, title);
+                values.put(Provider.MOVIE, id);
+                values.put(Provider.IMAGE, backdrop_path);
+                Uri uri = getContentResolver().insert(Provider.CONTENT_URI, values);
 
-            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+            }catch (Exception e){
+                Toast.makeText(this, "You already add it to Favorite!", Toast.LENGTH_SHORT).show();
+            }
+            //provider.insert(title,id,backdrop_path);
 
             return true;
         }

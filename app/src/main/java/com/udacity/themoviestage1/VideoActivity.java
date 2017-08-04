@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -57,6 +58,10 @@ public class VideoActivity extends YouTubeBaseActivity implements
 
     private YouTubePlayerView youTubeView;
 
+    private ScrollView scrollView;
+
+    private Bundle savedInstance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,7 @@ public class VideoActivity extends YouTubeBaseActivity implements
         id = intent.getStringExtra("id");
 
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         String url = APIConfig.DETAIL + id + "/reviews?api_key=" + getString(R.string.API_KEY);
         getNew(url);
@@ -84,6 +90,47 @@ public class VideoActivity extends YouTubeBaseActivity implements
         recyclerView2.setItemAnimator(new DefaultItemAnimator());
         trailerAdapter = new TrailerAdapter(VideoActivity.this,trailerList);
         recyclerView2.setAdapter(trailerAdapter);
+
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView2.setNestedScrollingEnabled(false);
+    }
+
+    //  two static variable,
+    public static int scrollX = 0;
+    public static int scrollY = -1;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scrollX = scrollView.getScrollX();
+        scrollY = scrollView.getScrollY();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(scrollX, scrollY);
+            }
+        });
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntArray("ARTICLE_SCROLL_POSITION", new int[]{ scrollView.getScrollX(), scrollView.getScrollY()});
+        Log.d("SCROLL", ""+scrollView.getScrollX()+scrollView.getScrollY());
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        final int[] position = savedInstanceState.getIntArray("ARTICLE_SCROLL_POSITION");
+        if(position != null)
+            scrollView.post(new Runnable() {
+                public void run() {scrollView.scrollTo(position[0], position[1]);
+                }
+            });
+        Log.d("SCROLL",""+position[0]+" "+position[1]);
     }
 
     private void getNew(String url) {

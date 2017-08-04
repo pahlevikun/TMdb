@@ -15,5 +15,4 @@ public class APIConfig {
 
     public static String BASE_IMAGE = "https://image.tmdb.org/t/p/w500/";
     public static String BASE_BACKDROP = "https://image.tmdb.org/t/p/w780/";
-
 }

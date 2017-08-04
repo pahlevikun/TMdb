@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -44,13 +45,14 @@ public class Provider extends ContentProvider {
     private SQLiteDatabase db;
     static final String DATABASE_NAME = "The Movie";
     static final String MOVIE_TABLE_NAME = "movie";
-    static final int DATABASE_VERSION = 4;
+    static final int DATABASE_VERSION = 6;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + MOVIE_TABLE_NAME +
                     " ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " "+TITLE+" TEXT NOT NULL, " +
-                    " "+MOVIE+" TEXT UNIQUE ON CONFLICT REPLACE, " +
-                    " "+IMAGE+" TEXT NOT NULL);";
+                    " "+MOVIE+" TEXT NOT NULL, " +
+                    " "+IMAGE+" TEXT NOT NULL," +
+                    "UNIQUE("+TITLE+","+MOVIE+","+IMAGE+"));";
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
         DatabaseHelper(Context context){
@@ -88,6 +90,15 @@ public class Provider extends ContentProvider {
         }
 
         throw new SQLException("Failed to add a record into " + uri);
+    }
+
+    public void insert(String Title, String id, String image) {
+
+        String sql1 = "INSERT INTO " +MOVIE_TABLE_NAME+ " (" +TITLE+ ", " +MOVIE+ ", " +IMAGE+ ") " +
+                "values('" +Title+  "','" +id+ "','" +image+ "') " +
+                "WHERE NOT "+id+" IN (SELECT "+MOVIE+" from "+MOVIE_TABLE_NAME+")";
+        db.execSQL(sql1);
+        Toast.makeText(getContext(),"inserted", Toast.LENGTH_SHORT).show();
     }
 
     @Override

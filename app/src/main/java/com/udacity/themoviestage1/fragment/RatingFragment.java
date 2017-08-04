@@ -7,10 +7,12 @@ package com.udacity.themoviestage1.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -49,15 +51,7 @@ public class RatingFragment extends Fragment{
     private RecyclerView recyclerView;
     private ArrayList<Movie> valueList = new ArrayList<>();
     private MovieAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-    private static Bundle mBundleRecyclerViewState;
-
-    private int scrollPosition;
-
-    private static final String LIST_STATE = "listState";
-    private Parcelable mListState = null;
-    private final String KEY_RECYCLER_STATE = "recycler_state";
+    private LinearLayoutManager layoutManager;
 
     public RatingFragment() {
     }
@@ -85,47 +79,34 @@ public class RatingFragment extends Fragment{
         return view;
     }
 
-    /*@Override
-    public void onPause() {
-        super.onPause();
-
-        // save RecyclerView state
-        mBundleRecyclerViewState = new Bundle();
-        Parcelable listState = recyclerView.getLayoutManager().onSaveInstanceState();
-        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // restore RecyclerView state
-        if (mBundleRecyclerViewState != null) {
-            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
-            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
-        }
-    }*/
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        //super.onSaveInstanceState(savedInstanceState);
-
-        //Parcelable listState = recyclerView.getLayoutManager().onSaveInstanceState();
-        //savedInstanceState.putParcelable(KEY_RECYCLER_STATE, listState);
-
-        //savedInstanceState.putInt(KEY_RECYCLER_STATE, recyclerView.getScrollY()); // get current recycle view position here.
         super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("Nilai",1);
+
+        int position = 0;
+        if (layoutManager != null) {
+            position = layoutManager.findFirstVisibleItemPosition();
+        }
+        savedInstanceState.putString("position",""+position);
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // restore RecyclerView state
-        /*if (savedInstanceState != null) {
-            Parcelable listState = savedInstanceState.getParcelable(KEY_RECYCLER_STATE);
-            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
-        }*/
+        if(savedInstanceState!=null){
+            final int position = Integer.parseInt(savedInstanceState.getString("position"));
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.scrollToPosition(position);
+                }
+            }, 200);
+        }
     }
 
     private void getRating(String url) {

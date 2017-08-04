@@ -24,7 +24,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".DetailActivity"
@@ -46,7 +45,6 @@
 
         <activity
             android:name=".FavActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
     </application>

@@ -7,8 +7,11 @@ package com.udacity.themoviestage1.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -46,7 +49,7 @@ public class NewReleaseFragment extends Fragment{
     private RecyclerView recyclerView;
     private ArrayList<Movie> valueList = new ArrayList<>();
     private MovieAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
     public NewReleaseFragment() {
     }
@@ -72,6 +75,36 @@ public class NewReleaseFragment extends Fragment{
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("Nilai",1);
+
+        int position = 0;
+        if (layoutManager != null) {
+            position = layoutManager.findFirstVisibleItemPosition();
+        }
+        savedInstanceState.putString("position",""+position);
+    }
+
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if(savedInstanceState!=null){
+            final int position = Integer.parseInt(savedInstanceState.getString("position"));
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.scrollToPosition(position);
+                }
+            }, 200);
+        }
     }
 
     private void getNew(String url) {
