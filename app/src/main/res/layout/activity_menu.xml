@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.udacity.themoviestage1.MenuActivity">
+
+    <ImageView
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <Button
+        android:id="@+id/buttonMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Movie"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/buttonFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Favorite"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/buttonCinema"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Cinema Map"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/buttonAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@color/colorPrimaryDark"
+        android:text="About"
+        android:textColor="@color/colorWhite" />
+</LinearLayout>

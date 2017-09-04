@@ -24,7 +24,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean doubleBackToExitPressedOnce = false;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -36,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -99,23 +100,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this,SearchActivity.class);
             startActivity(intent);
             return true;
-        }else if(id==R.id.action_fav) {
-            Intent intent = new Intent(this,FavActivity.class);
-            startActivity(intent);
-            return true;
-        }else if(id==R.id.action_info) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Information");
-            alert.setMessage("Farhan Yuda Pahlevi\n30 June 2017\nAssociate Android Developer Fast Track");
-            alert.setPositiveButton("Yes",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-                        }
-                    });
-            alert.show();
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -123,19 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Double click for exit!", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+        finish();
     }
 
 }
