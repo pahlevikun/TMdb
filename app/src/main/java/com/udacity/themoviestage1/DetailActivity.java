@@ -8,6 +8,9 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,15 +30,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+import com.udacity.themoviestage1.adapter.MovieAdapter;
+import com.udacity.themoviestage1.adapter.RecommendAdapter;
 import com.udacity.themoviestage1.config.APIConfig;
 import com.udacity.themoviestage1.contentprovider.Provider;
 import com.udacity.themoviestage1.pojo.Movie;
+import com.udacity.themoviestage1.pojo.Recommend;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +58,12 @@ public class DetailActivity extends AppCompatActivity  {
     private ProgressDialog loading;
 
     private Movie movie;
+
+
+    private RecyclerView recyclerView;
+    private ArrayList<Recommend> valueList = new ArrayList<>();
+    private RecommendAdapter adapter;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +89,13 @@ public class DetailActivity extends AppCompatActivity  {
         }
         appBarLayout.bringToFront();
 
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(DetailActivity.this,2);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new RecommendAdapter(DetailActivity.this,valueList);
+        recyclerView.setAdapter(adapter);
 
         Intent intent = getIntent();
         if(intent != null){
@@ -123,7 +143,6 @@ public class DetailActivity extends AppCompatActivity  {
 
             @Override
             public void onResponse(String response) {
-                hideDialog();
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -150,7 +169,9 @@ public class DetailActivity extends AppCompatActivity  {
                     }
                     setTitle(title);
                     shareBody = title+"\nRelease date : "+release_date+"\nPlot : "+overview;
-                } catch (JSONException e) {
+                    addMovie(movie.title,poster_path,voting);
+                } catch (JSONException e) {hideDialog();
+
                     Toast.makeText(DetailActivity.this, "JSON Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -214,6 +235,119 @@ public class DetailActivity extends AppCompatActivity  {
                 Toast.makeText(DetailActivity.this, "Can't connect to Server", Toast.LENGTH_LONG).show();
                 hideDialog();
                 finish();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                return headers;
+            }
+        };
+
+        int socketTimeout = 20000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
+
+    private void addMovie(final String title, final String poster, final String rating) {
+        RequestQueue queue = Volley.newRequestQueue(DetailActivity.this);
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, APIConfig.API_ADD, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    getRecommend();
+                } catch (JSONException e) {
+                    Toast.makeText(DetailActivity.this, "JSON Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    hideDialog();
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailActivity.this, "Can't connect to Server", Toast.LENGTH_LONG).show();
+                hideDialog();
+                finish();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id",movie.idMovie);
+                params.put("title",title);
+                params.put("poster",poster);
+                params.put("rating",rating);
+                params.put("interest","1");
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                return headers;
+            }
+        };
+
+        int socketTimeout = 20000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
+
+    private void getRecommend() {
+
+        RequestQueue queue = Volley.newRequestQueue(DetailActivity.this);
+
+        StringRequest postRequest = new StringRequest(Request.Method.GET, APIConfig.API_GET, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    Log.d("RESPON",""+response);
+
+                    JSONObject interest = jObj.getJSONObject("interest");
+                    JSONArray data = interest.getJSONArray("data");
+                    for (int i=0; i<data.length();i++){
+                        JSONObject film = data.getJSONObject(i);
+                        String id = film.getString("id");
+                        String nama = film.getString("title");
+                        String poster = film.getString("poster");
+                        valueList.add(new Recommend(id,nama,poster));
+                    }
+
+                    JSONObject rating = jObj.getJSONObject("rating");
+                    JSONArray data2 = rating.getJSONArray("data");
+                    for (int i=0; i<data2.length();i++){
+                        JSONObject film = data2.getJSONObject(i);
+                        String id = film.getString("id");
+                        String nama = film.getString("title");
+                        String poster = film.getString("poster");
+                        valueList.add(new Recommend(id,nama,poster));
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(DetailActivity.this, "JSON Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailActivity.this, "Can't connect to Server", Toast.LENGTH_LONG).show();
+                hideDialog();
             }
         }) {
             @Override

@@ -15,4 +15,7 @@ public class APIConfig {
 
     public static String BASE_IMAGE = "https://image.tmdb.org/t/p/w500/";
     public static String BASE_BACKDROP = "https://image.tmdb.org/t/p/w780/";
+
+    public static String API_GET = "https://restapiskripsi.000webhostapp.com/api/getmovie";
+    public static String API_ADD = "https://restapiskripsi.000webhostapp.com/api/addmovie";
 }

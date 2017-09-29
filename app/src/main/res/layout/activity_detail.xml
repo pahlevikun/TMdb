@@ -153,8 +153,26 @@
                         android:text="Video"
                         android:textColor="@color/colorWhite"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewToday"
+                        android:layout_below="@+id/buttonVideo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:text="Today Hits"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_below="@+id/textViewToday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+
         </android.support.design.widget.CoordinatorLayout>
     </ScrollView>
 </RelativeLayout>
