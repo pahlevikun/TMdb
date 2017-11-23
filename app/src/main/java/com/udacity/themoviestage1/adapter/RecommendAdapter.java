@@ -48,6 +48,16 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
                 .load(APIConfig.BASE_IMAGE+movieData.get(i).getPoster())
                 .error(R.drawable.ic_image)
                 .into(viewHolder.imageView);
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("judul",movieData.get(i).getJudul());
+                intent.putExtra("idMovie",movieData.get(i).getId());
+                intent.putExtra("recommend","recommend");
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

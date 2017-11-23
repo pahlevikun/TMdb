@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity  {
 
-    private String title, shareBody,url,backdrop_path;
+    private String title, shareBody,url,backdrop_path,idMovie;
 
     private FloatingActionButton floatingActionButton;
     private TextView tvTitle, tvVote, tvDate, tvPlot;
@@ -101,12 +101,17 @@ public class DetailActivity extends AppCompatActivity  {
         if(intent != null){
             if(intent.hasExtra("parcel")){
                 movie = intent.getParcelableExtra("parcel");
+                idMovie = movie.idMovie;
                 Log.d("Hasil"," "+movie.idMovie);
                 title = movie.title;
-                url = APIConfig.DETAIL + movie.idMovie + "?api_key=" + getString(R.string.API_KEY);
+                url = APIConfig.DETAIL + idMovie + "?api_key=" + getString(R.string.API_KEY);
             }else if (intent.hasExtra("kunci")){
                 title = intent.getStringExtra("judul");
                 url = APIConfig.DETAIL + intent.getStringExtra("kunci") + "?api_key=" + getString(R.string.API_KEY);
+            }else if (intent.hasExtra("recommend")){
+                title = intent.getStringExtra("judul");
+                idMovie = intent.getStringExtra("idMovie");
+                url = APIConfig.DETAIL + idMovie + "?api_key=" + getString(R.string.API_KEY);
             }else{
                 finish();
             }
@@ -169,7 +174,7 @@ public class DetailActivity extends AppCompatActivity  {
                     }
                     setTitle(title);
                     shareBody = title+"\nRelease date : "+release_date+"\nPlot : "+overview;
-                    addMovie(movie.title,poster_path,voting);
+                    addMovie(title,poster_path,voting);
                 } catch (JSONException e) {hideDialog();
 
                     Toast.makeText(DetailActivity.this, "JSON Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -283,7 +288,7 @@ public class DetailActivity extends AppCompatActivity  {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id",movie.idMovie);
+                params.put("id",idMovie);
                 params.put("title",title);
                 params.put("poster",poster);
                 params.put("rating",rating);
