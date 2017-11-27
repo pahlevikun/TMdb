@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -65,6 +70,10 @@ public class CinemaMapActivity extends AppCompatActivity implements OnMapReadyCa
     private ProgressDialog loading;
     private Double dLat, dLng;
     private boolean load = false;
+    private boolean hide = true;
+    private Button btDirect, btWeb;
+    private TextView textNama;
+    private LinearLayout linearLayout;
 
     private GPSTracker gps;
 
@@ -79,6 +88,12 @@ public class CinemaMapActivity extends AppCompatActivity implements OnMapReadyCa
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Cinema Map");
+
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        btDirect = (Button) findViewById(R.id.buttonArahkan);
+        btWeb = (Button) findViewById(R.id.buttonWeb);
+        textNama = (TextView) findViewById(R.id.namaBioskop);
+        linearLayout.setVisibility(View.GONE);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map1);
         mapFragment.getMapAsync(CinemaMapActivity.this);
@@ -125,6 +140,35 @@ public class CinemaMapActivity extends AppCompatActivity implements OnMapReadyCa
                 intent.putExtra("locLat", dLat);
                 intent.putExtra("locLng", dLng);
                 startActivity(intent);
+            }
+        });
+
+        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                if (hide){
+                    linearLayout.setVisibility(View.VISIBLE);
+                    hide = false;
+                }
+                textNama.setText(markerList.get(Integer.parseInt(marker.getId().replace("m", ""))).getNama());
+                btDirect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+dLat+","+dLng+"&daddr="+markerList.get(Integer.parseInt(marker.getId().replace("m", ""))).getLat()+","+markerList.get(Integer.parseInt(marker.getId().replace("m", ""))).getLng();
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+                        startActivity(intent);
+                    }
+                });
+
+                btWeb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(markerList.get(Integer.parseInt(marker.getId().replace("m", ""))).getUrl()));
+                        startActivity(i);
+                    }
+                });
+                return false;
             }
         });
 
@@ -181,11 +225,11 @@ public class CinemaMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     public void getMarker() {
 
-        markerList.add(new Markers(1, "Margo Platinum XXI", "-6.372688", "106.834737"));
-        markerList.add(new Markers(2, "Depok Town Square Cinemaxx", "-6.372219", "106.832334"));
-        markerList.add(new Markers(3, "DMall CGV Blitz", "-6.386976", "106.827045"));
-        markerList.add(new Markers(4, "DMall CGV Blitz", "-6.386976", "106.827045"));
-        markerList.add(new Markers(5, "Plaza Depok 21", "-6.392105", "106.825640"));
+        markerList.add(new Markers(1, "Ciputra Cibubur XXI", "-6.383407", "106.925625","https://m.21cineplex.com/gui.schedule.php?cinema_id=BKSCICI&find_by=2"));
+        markerList.add(new Markers(2, "Grand Mall Bekasi XXI", "-6.227866", "106.983707","https://m.21cineplex.com/gui.schedule.php?cinema_id=BKSGRMA&find_by=2"));
+        markerList.add(new Markers(3, "Metropolitan XXI", "-6.248572", "106.990634","https://m.21cineplex.com/gui.schedule.php?cinema_id=BKSMETL&find_by=2"));
+        markerList.add(new Markers(4, "Mega Bekasi XXI", "-6.250078", "106.993535","https://m.21cineplex.com/gui.schedule.php?cinema_id=BKSMEBE&find_by=2"));
+        markerList.add(new Markers(5, "Plasa Cibubur XXI", "-6.376393", "106.915048","https://m.21cineplex.com/gui.schedule.php?cinema_id=BKSPLCI&find_by=2"));
 
         for (int i = 0; i < markerList.size(); i++) {
             LatLng latLng = new LatLng(Double.parseDouble(markerList.get(i).getLat()), Double.parseDouble(markerList.get(i).getLng()));

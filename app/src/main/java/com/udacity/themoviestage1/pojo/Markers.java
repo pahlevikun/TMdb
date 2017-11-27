@@ -8,16 +8,18 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Markers {
     private int id;
-    private String nama, lat, lng;
+    private String nama, lat, lng, url;
 
-    public Markers(int id, String nama, String lat, String lng){
+    public Markers() {
+    }
+
+    public Markers(int id, String nama, String lat, String lng, String url) {
         this.id = id;
         this.nama = nama;
         this.lat = lat;
         this.lng = lng;
+        this.url = url;
     }
-
-
 
     public int getId() {
         return id;
@@ -51,4 +53,11 @@ public class Markers {
         this.lng = lng;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
