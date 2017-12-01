@@ -13,6 +13,7 @@
         android:layout_height="@dimen/_100sdp"
         android:src="@drawable/ic_launcher" />
     <TextView
+        android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_15sdp"

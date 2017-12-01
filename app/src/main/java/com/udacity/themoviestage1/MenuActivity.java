@@ -2,18 +2,21 @@ package com.udacity.themoviestage1;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
 
     private boolean doubleBackToExitPressedOnce = false;
     private Button btCinema, btMovie, btFav, btAbout;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,10 @@ public class MenuActivity extends AppCompatActivity {
         btMovie = (Button) findViewById(R.id.buttonMovie);
         btFav = (Button) findViewById(R.id.buttonFavorite);
         btAbout = (Button) findViewById(R.id.buttonAbout);
+        textView = (TextView) findViewById(R.id.textview);
+
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/hollywood.ttf");
+        textView.setTypeface(myTypeface);
 
         btMovie.setOnClickListener(new View.OnClickListener() {
             @Override
